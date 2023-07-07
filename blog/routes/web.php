@@ -2,17 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CursoController;
+use Illuminate\Database\Query\IndexHint;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', HomeController::class);
+
+Route::controller(CursoController::class)->group(function () {
+    Route::get('cursos', 'index');
+    Route::get('cursos/create', 'create');
+    Route::get('cursos/{curso}', 'show');
 });
+
+// Como se definen rutas sin agrupar
+// Route::get('cursos',[CursoController::class, 'index']);
+// Route::get('cursos/create',[CursoController::class, 'create']);
+// Route::get('cursos/{course}',[CursoController::class, 'show']);
